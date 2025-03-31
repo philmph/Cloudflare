@@ -1,23 +1,17 @@
 resource "cloudflare_dns_record" "this" {
-  # zone_id = var.zone_id
-  # comment = "Domain verification record"
-  # content = "198.51.100.4"
-  # name = "example.com"
-  # proxied = true
-  # settings = {
-  #   ipv4_only = true
-  #   ipv6_only = true
-  # }
-  # tags = ["owner:dns-team"]
-  # ttl = 3600
-  # type = "A"
+  for_each = local.yaml_validated
 
-  # Required
-  name = var.name
-  ttl = var.ttl
-  type = var.type
   zone_id = var.zone_id
 
+  # Required
+  name = each.value.name
+  ttl  = each.value.ttl
+  type = each.value.type
+
   # Optional
-  comment =
+  comment  = each.value.comment
+  content  = each.value.content
+  priority = each.value.priority
+  proxied  = each.value.proxied
+  tags     = each.value.tags
 }

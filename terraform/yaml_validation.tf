@@ -3,8 +3,10 @@ locals {
   yaml_filename = "dns_records.yaml"
   yaml_data     = yamldecode(file("${local.yaml_path}/${local.yaml_filename}"))
 
-  yaml_validated = { for i, o in module.module.yaml_validation.output.dns_records.zones :
-    o.id => o
+  # Needs a unique TF based ID because no identifier exists besides "content" which
+  # can be a wall of text
+  yaml_validated = { for i, o in module.yaml_validation.output.dns_records :
+    "${o.type}-${o.name}-${base64encode(o.content)}" => o
   }
 }
 
