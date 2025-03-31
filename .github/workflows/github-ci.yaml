@@ -1,0 +1,36 @@
+name: github-ci
+
+on:
+  push:
+    paths:
+      - "terraform/**"
+  pull_request:
+    branches:
+      - main
+
+env:
+  tflint_version: v0.56.0
+
+jobs:
+  tflint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v4
+        with:
+          tflint_version: ${{ env.tflint_version }}
+
+      - name: Show TFLint version
+        run: tflint --version
+
+      - name: Init TFLint
+        run: tflint --init
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Run TFLint
+        run: tflint -f compact --recursive --config="${{ github.workspace }}/.tflint.hcl"
