@@ -37,4 +37,3 @@ override.tf.json
 terraform.rc
 
 .DS_Store
-terraform/configuration/*
