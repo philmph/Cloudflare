@@ -1,15 +1,16 @@
 variable "input" {
   description = "Variable to validate yaml schema against"
   type = object({
-    dns_records = object({
-      zones = list(object({
-        id      = string
-        comment = optional(string)
-        content = string
-        name    = string
-        type    = string
-      }))
-    })
+    dns_records = list(object({
+      name     = string
+      ttl      = optional(number, 1)
+      type     = string
+      comment  = optional(string, "Managed by Terraform")
+      content  = optional(string)
+      priority = optional(number)
+      proxied  = optional(bool, false)
+      tags     = optional(list(string))
+    }))
   })
 }
 
