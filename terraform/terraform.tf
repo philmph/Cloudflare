@@ -1,6 +1,5 @@
 terraform {
-  # TODO: Tofu pin == Terraform pin param?
-  required_version = ""
+  required_version = "~> 1.9"
 
   required_providers {
     cloudflare = {
