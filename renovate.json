@@ -1,4 +1,14 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>philmph/renovate-bot//renovate-repo-config/default.json"]
+  "extends": ["github>philmph/renovate-bot//renovate-repo-config/default.json"],
+
+  "packageRules": [
+    {
+      "automerge": true,
+      "groupName": "Terraform minor and patch group",
+      "labels": ["terraform-minor-patch"],
+      "matchManagers": ["terraform"],
+      "matchUpdateTypes": ["minor", "patch"]
+    }
+  ]
 }
